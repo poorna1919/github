@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b6bfac74-4713-44a3-b7aa-fa53c1c96563" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="9c516d90-97ca-4cc2-bd33-ea70ca18b61b" />
+	<flow name="day3Flow" doc:id="a87e7a46-53f8-43d1-a394-69a9cb0104b4" >
+		<http:listener doc:name="Listener" doc:id="f2e8eff6-0b0b-426b-a999-d1e7919f5247" config-ref="HTTP_Listener_config" path="file"/>
+		<logger level="INFO" doc:name="Logger" doc:id="58ed6c17-587d-44cb-8cc4-e1ea2d60416c" message="Start"/>
+		<file:read doc:name="Read" doc:id="f2a7b577-0b36-4c24-8e6f-ddb96de4d5bc" config-ref="File_Config" path="C:\Users\Poorna Chander\Desktop\random.json"/>
+		<ee:transform doc:name="Transform Message" doc:id="a3e2359a-93c7-451a-bd48-f5e6d008a8b3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<file:write doc:name="Write" doc:id="bb50003d-a3f8-468a-a2f5-3887deb566a9" config-ref="File_Config" path="C:\Users\Poorna Chander\Desktop\xyz.xml"/>
+		<file:rename doc:name="Rename" doc:id="da0e13df-480e-456d-85ce-41e468872ca3" path="C:\Users\Poorna Chander\Desktop\xyz.xml" to="abc"/>
+		<logger level="INFO" doc:name="Logger" doc:id="dc02818b-4783-4eaf-9e2b-736afc50ae28" message="Stop"/>
+	</flow>
+</mule>
