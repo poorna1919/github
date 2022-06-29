@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="64274a0f-7569-4814-a81f-76fe2e827f3e" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="day4Flow" doc:id="5f6ca105-4c82-4951-98d0-c04c4fed2cda" >
+		<http:listener doc:name="Listener" doc:id="40d7a499-6782-4d6a-a024-62e2bdd053a8" config-ref="HTTP_Listener_config" path="smtp"/>
+		<parse-template doc:name="Parse Template" doc:id="b86fe71d-ba10-440f-a714-05d3c4232de6" location="C:\Users\Poorna Chander\Desktop\template.txt"/>
+		<logger level="INFO" doc:name="Logger" doc:id="6f710e89-118e-4594-8f89-31f606e6b727" message="#[payload]"/>
+	</flow>
+</mule>
